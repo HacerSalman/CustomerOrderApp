@@ -19,3 +19,7 @@ principle is followed by using a separate method for each process.
 
 ## Used technologies
 .Net 5, Entity Framework, AutoMapper, Pomelo, Repository Pattern, UnitOfWork, MySql, Jwt, Swagger, Fluent Api
+
+![image](https://user-images.githubusercontent.com/20662989/172023744-831102f3-475f-4507-b998-5efc4c4224ef.png)
+
+
