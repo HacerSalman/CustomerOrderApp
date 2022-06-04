@@ -21,6 +21,8 @@ namespace CustomerOrderApp.Data.Entities
         [Column("quantity")]
         public ulong Quantity { get; set; }
 
+        public List<CustomerOrderProduct> CustomerOrderProducts { get; set; }
+
         internal static void FluentInitAndSeed(ModelBuilder modelBuilder, EnumToStringConverter<EntityStatus.Values> statusConverter)
         {
             FluentInit<CustomerOrder>(modelBuilder, statusConverter);

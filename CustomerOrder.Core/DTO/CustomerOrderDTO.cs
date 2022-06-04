@@ -8,10 +8,10 @@ namespace CustomerOrderApp.Core.DTO
 {
     public class CustomerOrderDTO
     {
-        public string CustomerName { get; set; }
-        public string CustomerAddress { get; set; }
+        public ulong Id { get; set; }
+        public CustomerAddressDTO CustomerAddress { get; set; }
         public ulong Quantity { get; set; }
 
-        List<CustomerOrderProductDTO> ProductList{ get; set; }
+        public List<CustomerOrderProductDTO> CustomerOrderProducts { get; set; }
 }
 }

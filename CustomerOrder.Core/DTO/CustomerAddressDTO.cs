@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace CustomerOrderApp.Core.DTO
 {
-    public class CustomerDTO
+    public class CustomerAddressDTO
     {
-        public ulong Id { get; set; }
-        public string Name { get; set; }
+        public CustomerDTO Customer { get; set; }
+        public string Address { get; set; }
     }
 }

@@ -10,5 +10,7 @@ namespace CustomerOrderApp.Core.DTO
     {
         public ulong CustomerAddressId { get; set; }
         public ulong Quantity { get; set; }
+
+        public List<CustomerOrderProductDTO> CustomerOrderProducts { get; set; }
     }
 }

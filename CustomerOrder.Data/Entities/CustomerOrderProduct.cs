@@ -31,7 +31,7 @@ namespace CustomerOrderApp.Data.Entities
             FluentInit<CustomerOrderProduct>(modelBuilder, statusConverter);
             modelBuilder.Entity<CustomerOrderProduct>(entity =>
             {
-                entity.HasOne(e => e.CustomerOrder).WithMany().HasForeignKey(e => e.CustomerOrderId).HasPrincipalKey(c => c.Id).OnDelete(DeleteBehavior.Restrict);
+                entity.HasOne(e => e.CustomerOrder).WithMany(e => e.CustomerOrderProducts).HasForeignKey(e => e.CustomerOrderId).HasPrincipalKey(c => c.Id).OnDelete(DeleteBehavior.Restrict);
                 entity.HasOne(e => e.Product).WithMany().HasForeignKey(e => e.ProductId).HasPrincipalKey(c => c.Id).OnDelete(DeleteBehavior.Restrict);
             });
         }

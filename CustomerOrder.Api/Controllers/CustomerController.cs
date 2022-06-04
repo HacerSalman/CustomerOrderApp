@@ -55,9 +55,9 @@ namespace CustomerOrderApp.Api.Controllers
         }
 
         [HttpPut]
-        [Route("customers/{id}")]
+        [Route("customers")]
         [CustomerOrderAuthorize(UP.CUSTOMER_MANAGE)]
-        public async Task<ActionResult<CustomerDTO>> UpdateCustomer(ulong id, [FromBody] CustomerUpdateDTO customerDTO)
+        public async Task<ActionResult<CustomerDTO>> UpdateCustomer([FromBody] CustomerUpdateDTO customerDTO)
         {
             var customer = _mapper.Map<CustomerUpdateDTO, Customer>(customerDTO);
             var newCustomer = await _customerService.UpdateCustomer(customer);
@@ -75,7 +75,7 @@ namespace CustomerOrderApp.Api.Controllers
 
         [HttpPost]
         [Route("login")]
-        public async Task<ActionResult<string>> Login(LoginDTO loginDTO)
+        public async Task<ActionResult<string>> Login([FromBody] LoginDTO loginDTO)
         {
             return await _customerService.Login(loginDTO.Email, loginDTO.Password);
         }

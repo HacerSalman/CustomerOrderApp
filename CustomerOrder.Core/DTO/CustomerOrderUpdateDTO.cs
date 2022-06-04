@@ -8,6 +8,7 @@ namespace CustomerOrderApp.Core.DTO
 {
     public class CustomerOrderUpdateDTO
     {
+        public ulong Id { get; set; }
         public ulong CustomerAddressId { get; set; }
         public ulong Quantity { get; set; }
     }
