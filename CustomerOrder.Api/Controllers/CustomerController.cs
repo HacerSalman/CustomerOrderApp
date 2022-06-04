@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CustomerOrderApp.Core.DTO;
+using CustomerOrderApp.Core.Resources;
 using CustomerOrderApp.Core.Services;
 using CustomerOrderApp.Core.Utils;
 using CustomerOrderApp.Data.Entities;
@@ -40,6 +41,13 @@ namespace CustomerOrderApp.Api.Controllers
         [Route("customers/{id}")]
         public async Task<ActionResult<CustomerDTO>> GetCustomerById(ulong id)
         {
+            var user = new ClaimPrincipal(HttpContext.User);
+            if (user == null)
+                throw new InvalidOperationException(Resource.UNAUTHORIZED);
+            var userId = user.NameIdentifier.ToULong();
+            if (userId != id)
+                throw new InvalidOperationException(Resource.UNAUTHORIZED);
+
             var customer = await _customerService.GetCustomerById(id);
             return _mapper.Map<Customer, CustomerDTO>(customer);
         }
@@ -47,7 +55,7 @@ namespace CustomerOrderApp.Api.Controllers
 
         [HttpGet]     
         [Route("customers")]
-        [CustomerOrderAuthorize(UP.CUSTOMER_MANAGE)]
+        [CustomerOrderAuthorize(UP.SYSTEM_MANAGE)]
         public async Task<ActionResult<List<CustomerDTO>>> GetCustomerList()
         {
             var customerList = await _customerService.GetAllCustomers();
@@ -55,10 +63,17 @@ namespace CustomerOrderApp.Api.Controllers
         }
 
         [HttpPut]
-        [Route("customers")]
+        [Route("customers/{id}")]
         [CustomerOrderAuthorize(UP.CUSTOMER_MANAGE)]
-        public async Task<ActionResult<CustomerDTO>> UpdateCustomer([FromBody] CustomerUpdateDTO customerDTO)
+        public async Task<ActionResult<CustomerDTO>> UpdateCustomer(ulong id, [FromBody] CustomerUpdateDTO customerDTO)
         {
+            var user = new ClaimPrincipal(HttpContext.User);
+            if (user == null)
+                throw new InvalidOperationException(Resource.UNAUTHORIZED);
+            var userId = user.NameIdentifier.ToULong();
+            if(userId != id)
+                throw new InvalidOperationException(Resource.UNAUTHORIZED);
+
             var customer = _mapper.Map<CustomerUpdateDTO, Customer>(customerDTO);
             var newCustomer = await _customerService.UpdateCustomer(customer);
             return _mapper.Map<Customer, CustomerDTO>(newCustomer);
@@ -69,6 +84,13 @@ namespace CustomerOrderApp.Api.Controllers
         [CustomerOrderAuthorize(UP.CUSTOMER_MANAGE)]
         public async Task<ActionResult<CustomerDTO>> DeleteCustomer(ulong id)
         {
+            var user = new ClaimPrincipal(HttpContext.User);
+            if (user == null)
+                throw new InvalidOperationException(Resource.UNAUTHORIZED);
+            var userId = user.NameIdentifier.ToULong();
+            if (userId != id)
+                throw new InvalidOperationException(Resource.UNAUTHORIZED);
+
             var customer = await _customerService.GetCustomerById(id);
             return _mapper.Map<Customer, CustomerDTO>(await _customerService.DeleteCustomer(customer));
         }

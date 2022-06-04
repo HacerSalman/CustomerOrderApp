@@ -19,6 +19,9 @@ namespace CustomerOrderApp.Core.Utils
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<ICustomerOrderService, CustomerOrderService>();
+            services.AddScoped<ICustomerAddressService, CustomerAddressService>();
+            services.AddScoped<ICustomerOrderProductService, CustomerOrderProductService>();
+            services.AddScoped<IProductService, ProductService>();
         }
     }
 }

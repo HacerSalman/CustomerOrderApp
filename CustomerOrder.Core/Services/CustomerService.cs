@@ -69,7 +69,7 @@ namespace CustomerOrderApp.Core.Services
 
         public async Task<IEnumerable<Customer>> GetAllCustomers()
         {
-            return await _unitOfWork.Customers.GetAllAsync();
+            return await Task.FromResult(_unitOfWork.Customers.Find( _=> _.Status == EntityStatus.Values.ACTIVE).ToList());
         }
 
         public async Task<Customer> GetCustomerById(ulong id)
@@ -81,7 +81,7 @@ namespace CustomerOrderApp.Core.Services
         {
           
             //Find the Customer
-            var Customer = await Task.FromResult(_unitOfWork.Customers.Find(_ => _.Email == email ).FirstOrDefault());
+            var Customer = await Task.FromResult(_unitOfWork.Customers.Find(_ => _.Email == email && _.Status == EntityStatus.Values.ACTIVE).FirstOrDefault());
             if (Customer == null)
                 throw new InvalidOperationException(Resource.USERNAME_OR_PASSWORD_INCORRECT);
 

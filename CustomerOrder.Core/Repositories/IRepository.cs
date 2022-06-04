@@ -11,7 +11,7 @@ namespace CustomerOrderApp.Core.Repositories
     {
         ValueTask<TEntity> GetByIdAsync(ulong id);
         Task<IEnumerable<TEntity>> GetAllAsync();
-        IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
+        IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate, params string[] includes);
         Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate);
         Task<bool> Update(TEntity entity);
         Task<TEntity> AddAsync(TEntity entity);

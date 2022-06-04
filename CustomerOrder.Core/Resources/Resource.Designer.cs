@@ -79,6 +79,15 @@ namespace CustomerOrderApp.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unauthorized!.
+        /// </summary>
+        public static string UNAUTHORIZED {
+            get {
+                return ResourceManager.GetString("UNAUTHORIZED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Username or password incorrect!.
         /// </summary>
         public static string USERNAME_OR_PASSWORD_INCORRECT {

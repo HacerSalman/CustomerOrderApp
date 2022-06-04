@@ -20,7 +20,11 @@ namespace OrderSuggestion.Api.Mapping
             CreateMap<CustomerOrder, CustomerOrderCreateDTO>().ReverseMap();
             CreateMap<CustomerOrderProduct, CustomerOrderProductDTO>().ReverseMap();
             CreateMap<CustomerAddress, CustomerAddressDTO>().ReverseMap();
-
+            CreateMap<CustomerAddress, CustomerAddressCreateDTO>().ReverseMap();
+            CreateMap<CustomerAddress, CustomerAddressUpdateDTO>().ReverseMap();
+            CreateMap<Product, ProductDTO>().ReverseMap();
+            CreateMap<CustomerOrderProduct, CustomerOrderProductCreateDTO>().ReverseMap();
+            CreateMap<CustomerOrderProduct, CustomerOrderProductUpdateDTO>().ReverseMap();
         }
     }
 }

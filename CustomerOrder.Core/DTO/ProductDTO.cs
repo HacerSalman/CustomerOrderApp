@@ -6,10 +6,13 @@ using System.Threading.Tasks;
 
 namespace CustomerOrderApp.Core.DTO
 {
-    public class CustomerAddressDTO
+    public class ProductDTO
     {
         public ulong Id { get; set; }
-        public CustomerDTO Customer { get; set; }
-        public string Address { get; set; }
+        public string Barcode { get; set; }
+        public string Description { get; set; }
+
+        public ulong Quantity { get; set; }
+        public double Price { get; set; }
     }
 }

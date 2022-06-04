@@ -40,9 +40,13 @@ namespace CustomerOrderApp.Core.Repositories
             await context.Set<TEntity>().AddRangeAsync(entities);
         }
 
-        public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
+        public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate, params string[] includes)
         {
-            return context.Set<TEntity>().Where(predicate);
+            var query =  context.Set<TEntity>().Where(predicate);
+            foreach (var inc in includes)
+                query = query.Include(inc);
+
+            return query;
         }
 
         public async Task<IEnumerable<TEntity>> GetAllAsync()

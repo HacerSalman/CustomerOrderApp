@@ -22,7 +22,8 @@ namespace CustomerOrderApp.Data.Enums
         {
             CUSTOMER_MANAGE,
             CUSTOMER_ORDER_MANAGE,
-            PRODUCT_MANAGE
+            PRODUCT_MANAGE,
+            SYSTEM_MANAGE
         }
 
         internal static EnumToStringConverter<Values> FluentInitAndSeed(ModelBuilder modelBuilder)

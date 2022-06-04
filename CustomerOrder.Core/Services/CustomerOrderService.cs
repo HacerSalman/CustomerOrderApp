@@ -39,12 +39,12 @@ namespace CustomerOrderApp.Core.Services
 
         public async Task<IEnumerable<CustomerOrder>> GetAllCustomerOrdersByCustomerId(ulong customerId)  //todo: include CustomerAddress
         {
-            return await Task.FromResult(_unitOfWork.CustomerOrders.Find(_ => _.CustomerAddress.CustomerId == customerId).ToList());
+            return await Task.FromResult(_unitOfWork.CustomerOrders.Find(_ => _.CustomerAddress.CustomerId == customerId, new string[] { "CustomerAddress", "CustomerOrderProducts" }).ToList());
         }
 
         public async Task<CustomerOrder> GetCustomerOrderById(ulong id)
         {
-            return await _unitOfWork.CustomerOrders.GetByIdAsync(id);
+            return await Task.FromResult(_unitOfWork.CustomerOrders.Find(_ => _.Id == id, new string[] { "CustomerAddress", "CustomerOrderProducts" }).FirstOrDefault());
         }
 
         public async Task<CustomerOrder> UpdateCustomerOrder(CustomerOrder customerOrder)

@@ -15,21 +15,21 @@ using UP = CustomerOrderApp.Data.Enums.Permission.Values;
 namespace CustomerOrderApp.Api.Controllers
 {
     [ApiController]
-    public class CustomerOrderController : ControllerBase
+    public class CustomerOrderProductProductController : ControllerBase
     {
-        private readonly ICustomerOrderService _customerOrderService;
+        private readonly ICustomerOrderProductService _customerOrderProductService;
         private readonly IMapper _mapper;
-        public CustomerOrderController(ICustomerOrderService customerOrderService, IMapper mapper)
+        public CustomerOrderProductProductController(ICustomerOrderProductService customerOrderProductService, IMapper mapper)
         {
-            _customerOrderService = customerOrderService;
+            _customerOrderProductService = customerOrderProductService;
             _mapper = mapper;
         }
 
 
         [HttpPost]
-        [Route("customers/{customerId}/customerOrders")]
+        [Route("customers/{customerId}/customerOrderProducts")]
         [CustomerOrderAuthorize(UP.CUSTOMER_ORDER_MANAGE)]
-        public async Task<ActionResult<CustomerOrderDTO>> CreateCustomerOrder(ulong customerId, [FromBody] CustomerOrderCreateDTO customerOrderDTO)
+        public async Task<ActionResult<CustomerOrderProductDTO>> CreateCustomerOrder(ulong customerId, [FromBody] CustomerOrderProductCreateDTO customerOrderProductCreateDTO)
         {
             var user = new ClaimPrincipal(HttpContext.User);
             if (user == null)
@@ -38,15 +38,15 @@ namespace CustomerOrderApp.Api.Controllers
             if (userId != customerId)
                 throw new InvalidOperationException(Resource.UNAUTHORIZED);
 
-            var customerToCreate = _mapper.Map<CustomerOrderCreateDTO, CustomerOrder>(customerOrderDTO);
-            return _mapper.Map<CustomerOrder, CustomerOrderDTO>(await _customerOrderService.CreateCustomerOrder(customerToCreate));
-           
+            var customerOrderProduct = _mapper.Map<CustomerOrderProductCreateDTO, CustomerOrderProduct>(customerOrderProductCreateDTO);
+            return _mapper.Map<CustomerOrderProduct, CustomerOrderProductDTO>(await _customerOrderProductService.CreateCustomerOrderProduct(customerOrderProduct));
+
         }
 
         [HttpGet]
-        [Route("customers/{customerId}/customerOrders/{id}")]
+        [Route("customers/{customerId}/customerOrderProducts/{id}")]
         [CustomerOrderAuthorize(UP.CUSTOMER_ORDER_MANAGE)]
-        public async Task<ActionResult<CustomerOrderDTO>> GetCustomerOrderById(ulong customerId, ulong id)
+        public async Task<ActionResult<CustomerOrderProductDTO>> GetCustomerOrderProductById(ulong customerId, ulong id)
         {
             var user = new ClaimPrincipal(HttpContext.User);
             if (user == null)
@@ -55,15 +55,14 @@ namespace CustomerOrderApp.Api.Controllers
             if (userId != customerId)
                 throw new InvalidOperationException(Resource.UNAUTHORIZED);
 
-            var customerOrder = await _customerOrderService.GetCustomerOrderById(id);
-            return _mapper.Map<CustomerOrder, CustomerOrderDTO>(customerOrder);
+            return _mapper.Map<CustomerOrderProduct, CustomerOrderProductDTO>(await _customerOrderProductService.GetCustomerOrderProductById(id));
         }
 
 
         [HttpGet]
-        [Route("customers/{customerId}customerOrders")]
+        [Route("customers/{customerId}/customerOrders/{customerOrderId}/customerOrderProducts")]
         [CustomerOrderAuthorize(UP.CUSTOMER_ORDER_MANAGE)]
-        public async Task<ActionResult<List<CustomerOrderDTO>>> GetCustomerOrderList(ulong customerId)
+        public async Task<ActionResult<List<CustomerOrderProductDTO>>> GetCustomerOrderProductList(ulong customerId, ulong customerOrderId)
         {
             var user = new ClaimPrincipal(HttpContext.User);
             if (user == null)
@@ -72,14 +71,13 @@ namespace CustomerOrderApp.Api.Controllers
             if (userId != customerId)
                 throw new InvalidOperationException(Resource.UNAUTHORIZED);
 
-            var customerOrderList = await _customerOrderService.GetAllCustomerOrdersByCustomerId(customerId);
-            return _mapper.Map<IEnumerable<CustomerOrder>, List<CustomerOrderDTO>>(customerOrderList);
+            return _mapper.Map<IEnumerable<CustomerOrderProduct>, List<CustomerOrderProductDTO>>(await _customerOrderProductService.GetAllCustomerOrderProducts(customerOrderId));
         }
 
         [HttpPut]
-        [Route("customers/{customerId}/customerOrders")]
+        [Route("customers/{customerId}/customerOrderProducts")]
         [CustomerOrderAuthorize(UP.CUSTOMER_MANAGE)]
-        public async Task<ActionResult<CustomerOrderDTO>> UpdateCustomerOrder(ulong customerId, [FromBody] CustomerOrderUpdateDTO customerOrderUpdateDTO)
+        public async Task<ActionResult<CustomerOrderProductDTO>> UpdateCustomerOrderProduct(ulong customerId, [FromBody] CustomerOrderProductUpdateDTO CustomerOrderProductUpdateDTO)
         {
             var user = new ClaimPrincipal(HttpContext.User);
             if (user == null)
@@ -88,15 +86,15 @@ namespace CustomerOrderApp.Api.Controllers
             if (userId != customerId)
                 throw new InvalidOperationException(Resource.UNAUTHORIZED);
 
-            var customer = _mapper.Map<CustomerOrderUpdateDTO, CustomerOrder>(customerOrderUpdateDTO);
-            var newCustomer = await _customerOrderService.UpdateCustomerOrder(customer);
-            return _mapper.Map<CustomerOrder, CustomerOrderDTO>(newCustomer);
+            var customerOrderProduct = _mapper.Map<CustomerOrderProductUpdateDTO, CustomerOrderProduct>(CustomerOrderProductUpdateDTO);
+            return _mapper.Map<CustomerOrderProduct, CustomerOrderProductDTO>(await _customerOrderProductService.UpdateCustomerOrderProduct(customerOrderProduct));
+     
         }
 
         [HttpDelete]
-        [Route("customers/{customerId}/customerOrders/{id}")]
+        [Route("customers/{customerId}/customerOrderProducts/{id}")]
         [CustomerOrderAuthorize(UP.CUSTOMER_MANAGE)]
-        public async Task<ActionResult<CustomerOrderDTO>> DeleteCustomerOrder(ulong customerId, ulong id)
+        public async Task<ActionResult<CustomerOrderProductDTO>> DeleteCustomerOrderProduct(ulong customerId, ulong id)
         {
             var user = new ClaimPrincipal(HttpContext.User);
             if (user == null)
@@ -105,8 +103,8 @@ namespace CustomerOrderApp.Api.Controllers
             if (userId != customerId)
                 throw new InvalidOperationException(Resource.UNAUTHORIZED);
 
-            var customerOrder = await _customerOrderService.GetCustomerOrderById(id);
-            return _mapper.Map<CustomerOrder, CustomerOrderDTO>(await _customerOrderService.DeleteCustomerOrder(customerOrder));
+            var customerOrderProduct = await _customerOrderProductService.GetCustomerOrderProductById(id);
+            return _mapper.Map<CustomerOrderProduct, CustomerOrderProductDTO>(await _customerOrderProductService.DeleteCustomerOrderProduct(customerOrderProduct));
         }
     }
 }

@@ -34,7 +34,21 @@ namespace CustomerOrderApp.Data.Entities
             modelBuilder.Entity<Product>(entity =>
             {
                 entity.HasIndex(e => e.Description);
+                entity.HasData(new Product()
+                {
+                    Id = 1,
+                    Owner = "EF",
+                    Modifier = "EF",
+                    CreateTime = 1654358265000,
+                    UpdateTime = 1654358265000,
+                    Status = EntityStatus.Values.ACTIVE,
+                    Description = "New Product",
+                    Barcode = "Barcode",
+                    Price = 10,
+                    Quantity = 5
+
+                });
             });
-        }
+        }   
     }
 }

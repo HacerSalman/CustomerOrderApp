@@ -2,14 +2,16 @@
 using CustomerOrderApp.Data.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CustomerOrderApp.Data.Migrations
 {
     [DbContext(typeof(CustomerOrderDbContext))]
-    partial class CustomerOrderDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220604163807_productData")]
+    partial class productData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -32,14 +32,14 @@ namespace CustomerOrderApp.Core.Services
             return customerOrderProduct;
         }
 
-        public async Task<IEnumerable<CustomerOrderProduct>> GetAllCustomerOrderProducts()
+        public async Task<IEnumerable<CustomerOrderProduct>> GetAllCustomerOrderProducts(ulong customerOrderId)
         {
-            return await _unitOfWork.CustomerOrderProducts.GetAllAsync();
+            return await Task.FromResult(_unitOfWork.CustomerOrderProducts.Find(_ => _.CustomerOrderId == customerOrderId, new string[] { "CustomerOrder", "Product" }).ToList());
         }
 
         public async Task<CustomerOrderProduct> GetCustomerOrderProductById(ulong id)
         {
-            return await _unitOfWork.CustomerOrderProducts.GetByIdAsync(id);
+            return await Task.FromResult(_unitOfWork.CustomerOrderProducts.Find(_ => _.Id == id, new string[] { "CustomerOrder", "Product" }).FirstOrDefault());
         }
 
         public async Task<CustomerOrderProduct> UpdateCustomerOrderProduct(CustomerOrderProduct customerOrderProduct)

@@ -9,7 +9,7 @@ namespace CustomerOrderApp.Core.Services
 {
     public interface ICustomerOrderProductService
     {
-        Task<IEnumerable<CustomerOrderProduct>> GetAllCustomerOrderProducts();
+        Task<IEnumerable<CustomerOrderProduct>> GetAllCustomerOrderProducts(ulong customerOrderId);
         Task<CustomerOrderProduct> GetCustomerOrderProductById(ulong id);
         Task<CustomerOrderProduct> CreateCustomerOrderProduct(CustomerOrderProduct newCustomerOrderProduct);
         Task<CustomerOrderProduct> UpdateCustomerOrderProduct(CustomerOrderProduct customerOrderProduct);

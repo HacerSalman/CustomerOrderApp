@@ -33,7 +33,7 @@ namespace CustomerOrderApp.Core.Services
 
         public async Task<IEnumerable<CustomerAddress>> GetAllCustomerAddressesByCustomerId(ulong customerId)
         {
-            return await Task.FromResult(_unitOfWork.CustomerAddresses.Find(_ => _.CustomerId == customerId).ToList());
+            return await Task.FromResult(_unitOfWork.CustomerAddresses.Find(_ => _.CustomerId == customerId, new string[] { "Customer" }).ToList());
         }
 
         public async Task<CustomerAddress> GetCustomerAddressById(ulong id)

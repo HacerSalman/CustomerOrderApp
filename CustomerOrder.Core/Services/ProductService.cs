@@ -35,7 +35,7 @@ namespace CustomerOrderApp.Core.Services
 
         public async Task<IEnumerable<Product>> GetAllProducts()
         {
-            return await _unitOfWork.Products.GetAllAsync();
+            return await Task.FromResult(_unitOfWork.Products.Find(_ => _.Status == EntityStatus.Values.ACTIVE).ToList());
         }
 
         public async Task<Product> GetProductById(ulong id)
